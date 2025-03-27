@@ -8,18 +8,25 @@ const wss = new WebSocketServer({ server });
 let clients = [];
 
 wss.on("connection", (ws) => {
+    // Ajouter le client à la liste des clients connectés
     clients.push(ws);
 
     ws.on("message", (message) => {
-        // Transmet le message à tous les autres clients
-        clients.forEach(client => {
-            if (client !== ws && client.readyState === client.OPEN) {
-                client.send(message);
-            }
-        });
+        try {
+            const parsedMessage = JSON.parse(message);
+
+            clients.forEach(client => {
+                if (client !== ws && client.readyState === client.OPEN) {
+                    client.send(JSON.stringify(parsedMessage));
+                }
+            });
+        } catch (error) {
+            console.error("Erreur lors du traitement du message WebSocket:", error);
+        }
     });
 
     ws.on("close", () => {
+        // Retirer client
         clients = clients.filter(client => client !== ws);
     });
 });
