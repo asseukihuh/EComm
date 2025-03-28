@@ -23,7 +23,7 @@ function connection(){
         // Afficher le flux local dans l'élément vidéo
         localVideo.srcObject = stream;
 
-        // Ajouter les pistes à la connexion WebRTC
+        // Ajouter les pistes à la connexion WebRTC .
         stream.getTracks().forEach(track => peerConnection.addTrack(track, stream)); 
     })
     .catch(error => {
