@@ -8,7 +8,7 @@ const wss = new WebSocketServer({ server });
 let clients = [];
 
 wss.on("connection", (ws) => {
-    // Ajouter le client à la liste des clients connectés
+    // Ajouter le client à la liste des clients connectés 
     clients.push(ws);
 
     ws.on("message", (message) => {
